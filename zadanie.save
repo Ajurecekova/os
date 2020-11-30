@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$#" != 2 ]
+then
+	echo 'musia byt dva argumenty'
+	exit 1
+fi
+
+DAY=$(echo $1 | grep -o ^..)
+echo "$SEARCH_ARG"
+START_TIME= date -d "$SEARCH_ARG" +'%s'
+END_TIME= $(echo "$START_TIME + 86400" | bc)
+echo "$END_TIME"
+URL='https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&stationString=LZIB&hoursBeforeNow=2'
+curl -s "$URL" |
+	grep -o "$2".*
